@@ -1,41 +1,30 @@
 <?php
-      use PHPMailer\PHPMailer\PHPMailer;
-      use PHPMailer\PHPMailer\Exception;
+ 
+ if(isset($_POST['submit'])) {
+  
 
-      require 'phpmailer/src/Exception.php';
-      require 'phpmailer/src/PHPMailer.php';
-      require 'phpmailer/src/SMTP.php';
+$name = $_POST['name'];
+$visitor_email = $_POST['email'];
+$message = $_POST['field'];
 
-      if(iset($_POST[send])){
-         $mail = new PHPMailer(true);
+$email_form = 'mufidskamer@gmail.com';
 
-         $mail->isSMTP();
-         $mail->Host = 'smtp.gmail.com';
-         $mail->SMTPAuth = true;
-         $mail->Username = 'ajdevelopment0@gmail.com ';
-         $mail->Password = 'vapfyjgolsnaaing';
-         $mail->SMTPSecure = 'ssl';
-         $mail->Port = 465;
+$email_subject = "New Form Submission";
 
-         $mail->setFrom('ajdevelopment0@gmail.com');
+$email_body = "User Name: $name .\n".
+                "User Email: $visitor_email .\n".
+                  "Subject: Test .\n".
+                     "User Message: $message .\n";
 
-         $mail->addAddress($_POST["email"]);
+                    $headers = "MIME-Version: 1.0" . "\r\n";
+                    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                    $headers .= "From: <$email_form>" . "\r\n";
+                   
+                    $retval = mail($visitor_email,$email_subject,$email_body,$headers);
 
-         $mail->isHTML(true);
-
-         $mail->Subject = $_POST["subject"];
-         $mail->Body = $_POST["message"];
-
-         $mail->send();
-
-         echo
-         "
-         <script>
-         alert('Sent Successfully');
-         document.location.href = 'php.php';
-         </script>
+ }
 
 
+header("Location: index.html");
 
-      }
-      ?>
+?>
